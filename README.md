@@ -1,2 +1,2 @@
 #Birthday-Card
-https://decentdrashti.github.io/B-D/
+https://decentdrashti.github.io/Birthday-Card/

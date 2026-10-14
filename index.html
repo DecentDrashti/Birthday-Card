@@ -1,33 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Happy Birthday</title>
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="birthdayCard">
-      <div class="cardFront">
-        <h3 class="happy">HAPPY BIRTHDAY</h3>
-        <div class="balloons">
-          <div class="balloon-1"></div>
-          <div class="balloon-2"></div>
-          <div class="balloon-3"></div>
-          <div class="balloon-4"></div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday, Bestie! ✨</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Pacifico&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Canvas for Confetti, Fireworks & Ambient Particles -->
+  <canvas id="effectsCanvas"></canvas>
+
+  <!-- Music Control -->
+  <button id="music-btn" class="music-btn" aria-label="Toggle Music">
+    <div class="music-icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor"
+          d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+      </svg>
+    </div>
+    <div class="sound-waves">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </button>
+
+  <!-- STAGE 1: INTRO (Surprise Gift Box) -->
+  <div id="intro-stage" class="stage-container active">
+    <div class="gift-wrapper">
+      <h1 class="gift-title">Hey Bestie! 🎂</h1>
+      <p class="gift-subtitle">A special surprise is waiting for you...</p>
+
+      <div class="gift-box-container">
+        <div class="gift-box" id="interactiveGift">
+          <div class="gift-lid">
+            <div class="lid-ribbon"></div>
+          </div>
+          <div class="box-body">
+            <div class="box-ribbon-v"></div>
+            <div class="box-ribbon-h"></div>
+          </div>
+          <div class="gift-glow"></div>
         </div>
       </div>
-      <div class="cardInside">
-        <h3 class="back">HAPPY BIRTHDAY</h3>
-        <p>Dear Bestie:</p>
-        <p>
-          Many many happy returns of the day dear I hope you are having your special day with a lots of fun,chocolates and ofcourse parties!!
-        </p>
-        <p class="name">Thank you...</p> 
-      </div>
+
+      <button id="open-gift-btn" class="action-btn pulsing">Click to Open Your Surprise 🎁</button>
     </div>
-    <script src="server.js"></script>
-  </body>
+  </div>
+
+  <!-- STAGE 2: THE CARD & CELEBRATION -->
+  <div id="card-stage" class="stage-container">
+    <div class="experience-wrapper">
+
+      <!-- The 3D Birthday Card -->
+      <div class="card-container">
+        <div class="card-instruction" id="tapInstruction">Tap card to open 👆</div>
+        <div class="birthdayCard" id="bCard">
+          <!-- Front of the Card -->
+          <div class="cardFront">
+            <div class="card-cover-pattern"></div>
+            <div class="card-decor-star decor-star-1">✦</div>
+            <div class="card-decor-star decor-star-2">✦</div>
+            <div class="card-decor-star decor-star-3">✦</div>
+            <div class="card-decor-star decor-star-4">✦</div>
+            <h3 class="happy">HAPPY BIRTHDAY</h3>
+            <div class="balloons">
+              <div class="balloon-1"></div>
+              <div class="balloon-2"></div>
+              <div class="balloon-3"></div>
+              <div class="balloon-4"></div>
+            </div>
+            <div class="ribbon-seal">
+              <span>With Love</span>
+            </div>
+          </div>
+
+          <!-- Inside of the Card -->
+          <div class="cardInside">
+            <div class="cardInside-bg"></div>
+            <h3 class="back">HAPPY BIRTHDAY</h3>
+            <div class="message-content">
+              <p class="msg-salutation">Dear Bestie:</p>
+              <div class="msg-body" id="typewriterMessage"
+                data-message="Many many happy returns of the day dear I hope you are having your special day with a lots of fun,chocolates and ofcourse parties!!">
+                <!-- Typewriter effect will fill this -->
+              </div>
+              <p class="name">thank you...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Interactive Birthday Cake (reveals after card opens) -->
+      <div class="cake-container hidden" id="cakeStage">
+        <div class="cake-box">
+          <h2 class="cake-title">Make a Wish! 🌟</h2>
+          <p class="cake-prompt" id="cakePrompt">Blow out the candles (click them!)</p>
+
+          <!-- CSS Cake -->
+          <div class="cake" id="interactiveCake">
+            <div class="frosting-drips"></div>
+            <div class="cake-layer layer-top"></div>
+            <div class="cake-layer layer-middle"></div>
+            <div class="cake-layer layer-bottom"></div>
+            <div class="candles-wrapper">
+              <div class="candle active" data-candle="1">
+                <div class="flame"></div>
+                <div class="wick"></div>
+                <div class="wax"></div>
+              </div>
+              <div class="candle active" data-candle="2">
+                <div class="flame"></div>
+                <div class="wick"></div>
+                <div class="wax"></div>
+              </div>
+              <div class="candle active" data-candle="3">
+                <div class="flame"></div>
+                <div class="wick"></div>
+                <div class="wax"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wishes-box hidden" id="wishesMessage">
+            <h3 class="wishes-title">✨ Blow Out Absolute Success! ✨</h3>
+            <p>May your birthday bring as much joy, warmth, and fun as you bring into my life! You deserve the world.
+            </p>
+            <button id="replay-btn" class="action-btn mini">Replay Birthday Surprise 🔄</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Client Script -->
+  <script src="script.js"></script>
+</body>
+
 </html>
